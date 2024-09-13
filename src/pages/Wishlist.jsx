@@ -50,7 +50,9 @@ const Wishlist = () => {
                     </span>
                   </p>
                   <div className="flex items-center gap-3 mt-2 text-base text-gray-700">
-                    <p>{item?.productData?.price}</p>
+                    <p>
+                      {"$"} {item?.productData?.price}
+                    </p>
                   </div>
                 </div>
               </div>

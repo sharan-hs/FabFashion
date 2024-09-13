@@ -31,7 +31,9 @@ const Orders = () => {
                   {item?.productData?.name}
                 </p>
                 <div className="flex items-center gap-3 mt-2 text-base text-gray-700">
-                  <p>{item?.productData?.price}</p>
+                  <p>
+                    {"$"} {item?.productData?.price}
+                  </p>
                   <p>Quantity: {item?.quantity}</p>
                   <p>Size: {item?.size}</p>
                 </div>
