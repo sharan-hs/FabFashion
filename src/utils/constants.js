@@ -44,4 +44,4 @@ export const STAR_ICON_URL =
 export const DULL_STAR_ICON =
   "https://res.cloudinary.com/dp6n0rxyv/image/upload/v1726075347/fabfashion/assets/star_dull_icon_gs6i1w.png";
 
-export const BACKEND_URL = "https://backend-fabfashion.vercel.app/";
+export const BACKEND_URL = "https://backend-fabfashion.vercel.app";
