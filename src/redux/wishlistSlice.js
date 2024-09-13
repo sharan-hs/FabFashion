@@ -25,10 +25,12 @@ const wishlistSlice = createSlice({
       }
     },
     removeFromWishList: (state, action) => {
-      const { productData, size } = action.payload;
+      const { productData } = action.payload;
+      const size = action.payload;
 
       const itemIndex = state.wishlist.findIndex(
-        (item) => item.productData._id === productData._id && item.size === size
+        (item) =>
+          item.productData?._id === productData._id && item.size === size
       );
 
       state.wishlist.splice(itemIndex, 1);

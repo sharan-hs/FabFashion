@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import RelatedProducts from "../components/RelatedProducts";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../redux/productSlice";
-import { addToCart } from "../redux/cartSlice";
+import { addToCart, removeFromCart } from "../redux/cartSlice";
 import { toast } from "react-toastify";
 import { addToWishlist, removeFromWishList } from "../redux/wishlistSlice";
 import { DULL_STAR_ICON, STAR_ICON_URL } from "../utils/constants";
@@ -12,7 +12,9 @@ const Product = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
   const { wishlist } = useSelector((store) => store.wishlist);
+
   const [wishListAdded, setWishListAdded] = useState(false);
+  const [cartAdded, setCartAdded] = useState(false);
 
   const { products } = useSelector((state) => state.products);
 
@@ -57,20 +59,28 @@ const Product = () => {
 
   const cartHandler = (productData) => {
     if (size) {
-      dispatch(addToCart({ productData, size }));
-      toast.success("Added to Cart!");
+      if (!cartAdded) {
+        dispatch(addToCart({ productData, size }));
+        setCartAdded(!cartAdded);
+        toast.success("Added to Cart!");
+      } else {
+        dispatch(removeFromCart({ productData, size }));
+        setCartAdded(!cartAdded);
+        toast.success("Removed from Cart!");
+      }
     } else {
       toast.error("Select a Size");
     }
   };
   const wishListHandler = (product) => {
+    const productData = { ...product };
     if (wishListAdded) {
-      dispatch(removeFromWishList({ product, size }));
+      dispatch(removeFromWishList({ productData, size }));
       toast.success("Removed from Wishlist!");
       setWishListAdded(!wishListAdded);
     } else {
       if (size) {
-        dispatch(addToWishlist({ product, size }));
+        dispatch(addToWishlist({ productData, size }));
         toast.success("Added to Wishlist!");
         setWishListAdded(!wishListAdded);
       } else {
@@ -146,7 +156,7 @@ const Product = () => {
             onClick={() => cartHandler(productData)}
             className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
           >
-            ADD TO CART
+            {cartAdded ? "REMOVE FROM CART" : "ADD TO CART"}
           </button>
           <button
             onClick={() => wishListHandler(productData)}
